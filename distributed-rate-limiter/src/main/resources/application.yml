@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: distributed-rate-limiter
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+
+rate-limiter:
+  enabled: true
+  default-algorithm: TOKEN_BUCKET
+  default-limit: 100
+  default-window-seconds: 60
+  fail-open: true  # allow requests if Redis is down
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus, metrics
